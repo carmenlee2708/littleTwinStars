@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>物理治療基礎問答題</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        font-size: 30px;
+        margin: 2%;
+        background-color: bisque;
+      }
+      .question {
+        margin-bottom: 20px;
+      }
+      #btn:hover {
+        background-color: #ff00ff;
+        color: blue;
+      }
+
+      #btn:active {
+        background-color: #3e8e41;
+        box-shadow: 2px 5px 10px #ff0101;
+        transform: translateY(10px);
+        border: 2px;
+      }
+      a {
+        color: #fc0176;
+        text-decoration: none;
+      }
+
+      a:visited {
+        color: #fc0176;
+      }
+
+      a:hover {
+        color: #fc0176;
+      }
+
+      a:active {
+        color: #fc0176;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="quiz" style="text-shadow: 2px 5px 5px #63e0ff">🎓純粹知多啲💡</div>
+    <button
+      id="submit"
+      style="
+        font-size: 30px;
+        border-radius: 20px;
+        box-shadow: 0px 10px 10px rgb(80, 80, 80);
+        cursor: pointer;
+        color: red;
+        text-shadow: 2px 2px 5px grey;
+        margin-bottom: 30px;
+      "
+    >
+      顯示答案
+    </button>
+    <button
+      id="上一題"
+      style="
+        font-size: 30px;
+        border-radius: 20px;
+        box-shadow: 0px 10px 10px rgb(255, 230, 1);
+        cursor: pointer;
+        color: rgb(247, 0, 255);
+        text-shadow: 2px 2px 5px grey;
+        margin-bottom: 30px;
+      "
+    >
+      <a href="q23.html" style="text-decoration: none">上一題</a>
+    </button>
+    <button
+      id="下一題"
+      style="
+        font-size: 30px;
+        border-radius: 20px;
+        box-shadow: 0px 10px 10px rgb(1, 217, 255);
+        cursor: pointer;
+        color: rgb(247, 0, 255);
+        text-shadow: 2px 2px 5px grey;
+        margin-bottom: 30px;
+      "
+    >
+      <a href="q25.html" style="text-decoration: none">下一題</a>
+    </button>
+    <div id="results"></div>
+
+    <button onclick="myFunction()" id="myBtn">
+      <img src="/image/q24.jpg" alt="" style="width: 200px" />
+    </button>
+
+    <script>
+      const quizContainer = document.getElementById("quiz");
+      const resultsContainer = document.getElementById("results");
+      const submitButton = document.getElementById("submit");
+
+      const myQuestions = [
+        {
+          question: "下列那一對腦神經，不包含副交感節前神經元?",
+          answers: {
+            a: "第三對",
+            b: "第五對",
+            c: "第十對",
+            d: "第十三對",
+          },
+          correctAnswer: "b",
+        },
+      ];
+
+      function buildQuiz() {
+        myQuestions.forEach((currentQuestion, questionNumber) => {
+          const answers = Object.keys(currentQuestion.answers)
+            .map((letter) => {
+              return `<label>
+                <input type="radio" name="question${questionNumber}" value="${letter}">
+                ${letter}: ${currentQuestion.answers[letter]}
+            </label><br>`;
+            })
+            .join("");
+
+          quizContainer.innerHTML += `<div class="question">
+            <h3>${currentQuestion.question}</h3>
+            ${answers}
+        </div>`;
+        });
+      }
+
+      function checkAnswers() {
+        var dots = document.getElementById("dots");
+        var moreText = document.getElementById("more");
+        var btnText = document.getElementById("myBtn");
+
+        let score = 0;
+        myQuestions.forEach((currentQuestion, questionNumber) => {
+          const selectedAnswer = document.querySelector(
+            `input[name="question${questionNumber}"]:checked`
+          );
+          if (selectedAnswer) {
+            const userAnswer = selectedAnswer.value;
+            if (userAnswer === currentQuestion.correctAnswer) {
+              score++;
+              btnText.innerHTML = "答對!";
+              btnText.style.fontSize = "30px";
+            } else {
+              btnText.innerHTML =
+                "正確答案是... " +
+                currentQuestion.answers[currentQuestion.correctAnswer];
+            }
+            btnText.style.fontSize = "30px";
+          } else {
+            btnText.innerHTML = "請選擇一個答案";
+            btnText.style.fontSize = "30px";
+          }
+        });
+        // resultsContainer.innerHTML = `您的總分是: ${score} / ${myQuestions.length}`;
+      }
+
+      buildQuiz();
+
+      submitButton.addEventListener("click", checkAnswers);
+    </script>
+  </body>
+</html>
